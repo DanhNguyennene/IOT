@@ -1,0 +1,409 @@
+/* DashboardPage.css */
+.dashboard-page {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f5f0e1;
+    font-family: Arial, sans-serif;
+    overflow: hidden; /* Prevent page overflow */
+  }
+  
+  .dashboard-main-content {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .dashboard-header {
+    background-color: #f5e5b3;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  
+  .dashboard-header-title {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+  }
+  
+  .dashboard-header-subtitle {
+    font-size: 14px;
+    color: #666;
+    margin: 5px 0 0;
+  }
+  
+  .dashboard-header-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .dashboard-temperature {
+    font-size: 24px;
+    color: #333;
+    margin-right: 20px;
+  }
+  
+  .dashboard-add-device-button {
+    padding: 12px 24px;
+    background-color: #8b5a2b;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(139, 90, 43, 0.2);
+  }
+  
+  .dashboard-add-device-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(139, 90, 43, 0.3);
+    background-color: #9b6a3b;
+  }
+  
+  .dashboard-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 20px;
+    padding-top: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    min-height: 0;
+    overflow: visible;
+    position: relative;
+    z-index: 5;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  .dashboard-temperature-frame {
+    grid-column: 1;
+    grid-row: 1;
+    min-width: 250px;
+  }
+  
+  .dashboard-temperature-chart {
+    grid-column: 2 / span 2;
+    grid-row: 1;
+    min-height: 250px;
+  }
+  
+  .dashboard-humidity-frame {
+    grid-column: 1;
+    grid-row: 2;
+    min-width: 250px;
+  }
+  
+  .dashboard-light-frame {
+    grid-column: 2;
+    grid-row: 2;
+    min-width: 250px;
+  }
+  
+  .dashboard-motion-frame {
+    grid-column: 3;
+    grid-row: 2;
+    min-width: 250px;
+  }
+  
+  .dashboard-frame {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 280px;
+    max-height: 320px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(139, 90, 43, 0.1);
+    position: relative;
+    z-index: 1;
+  }
+  
+  .dashboard-frame:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(139, 90, 43, 0.15);
+    z-index: 2;
+  }
+  
+  .dashboard-frame::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to right, #8b5a2b, #f5e5b3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 10px 10px 0 0;
+  }
+  
+  .dashboard-frame:hover::before {
+    opacity: 1;
+  }
+  
+  .dashboard-frame-title {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 15px;
+    transition: color 0.3s ease;
+  }
+  
+  .dashboard-frame:hover .dashboard-frame-title {
+    color: #8b5a2b;
+  }
+  
+  /* Temperature Frame */
+  .dashboard-temperature-frame {
+    padding: 10px; /* Reduced padding */
+  }
+  
+  .dashboard-progress-bar {
+    width: 90%;
+    height: 12px;
+    background-color: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .dashboard-frame:hover .dashboard-progress-bar {
+    transform: scaleX(1.05);
+  }
+  
+  .dashboard-progress-filled {
+    width: 64.5%;
+    height: 100%;
+    background-color: #f5e5b3;
+    border-radius: 10px 0 0 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dashboard-frame:hover .dashboard-progress-filled {
+    background-color: #8b5a2b;
+  }
+  
+  .dashboard-frame-value {
+    font-size: 20px;
+    color: #333;
+    margin: 0;
+  }
+  
+  /* Temperature Chart */
+  .dashboard-chart-container {
+    height: 200px;
+    width: 100%;
+    position: relative;
+  }
+  
+  /* Humidity, Motion, and Light Frames */
+  .dashboard-circle-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .dashboard-frame:hover .dashboard-circle-container {
+    transform: scale(1.1);
+  }
+  
+  .dashboard-circle-progress {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+  
+  .dashboard-circle-bg {
+    stroke: #f0f0f0;
+  }
+  
+  .dashboard-circle-fill {
+    stroke: #f5e5b3;
+    transition: stroke-dasharray 0.3s ease;
+  }
+  
+  .dashboard-circle-value {
+    position: relative;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    z-index: 1;
+  }
+  
+  .dashboard-humidity-frame .dashboard-circle-container {
+    border-color: #f5e5b3;
+  }
+  
+  .dashboard-circle-overlay {
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    width: 81px;
+    height: 81px;
+    border: 6px solid transparent;
+    border-top-color: #8b5a2b;
+    border-radius: 50%;
+    transform: rotate(194deg);
+  }
+  
+  /* Motion */
+  .dashboard-motion-circle {
+    border-color: #ddd;
+  }
+  
+  /* Light Frame */
+  .dashboard-light-circle {
+    flex-direction: column;
+  }
+  
+  .dashboard-light-value-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .dashboard-circle-label {
+    font-size: 14px;
+    color: #666;
+    margin-top: 8px;
+  }
+  
+  .dashboard-light-overlay {
+    border-top-color: transparent;
+    border-right-color: #f5c518;
+    transform: rotate(72deg);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .dashboard-main-content {
+      padding: 15px;
+    }
+    
+    .dashboard-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    
+    .dashboard-header-right {
+      width: 100%;
+      justify-content: space-between;
+    }
+    
+    .dashboard-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .dashboard-frame {
+      min-height: 200px;
+    }
+  }
+
+  /* Warning Modal */
+  .dashboard-warning-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .dashboard-warning-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .dashboard-warning-content h3 {
+    color: #ff0000;
+    margin-bottom: 10px;
+    font-size: 24px;
+  }
+
+  .dashboard-warning-content p {
+    margin-bottom: 20px;
+    white-space: pre-line;
+    font-size: 16px;
+    color: #333;
+  }
+
+  .dashboard-warning-content button {
+    padding: 10px 20px;
+    background-color: #8b5a2b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+  }
+
+  .dashboard-warning-content button:hover {
+    background-color: #9b6a3b;
+  }
+
+  /* Motion Frame */
+  .dashboard-motion-frame .dashboard-circle-container {
+    border: none;
+  }
+
+  .dashboard-motion-frame .dashboard-circle-value {
+    color: #333;
+    font-size: 24px;
+  }
+
+  /* Light Frame */
+  .dashboard-light-frame .dashboard-circle-container {
+    border: none;
+  }
+
+  .dashboard-light-value-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dashboard-circle-label {
+    font-size: 14px;
+    color: #666;
+    margin-top: 8px;
+  }

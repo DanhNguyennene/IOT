@@ -1,0 +1,99 @@
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 239, 213, 0.9); /* Soft peach overlay */
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fff5f5; /* Light pink */
+  padding: 2rem;
+  border-radius: 20px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 10px 20px rgba(255, 193, 193, 0.5); /* Soft shadow */
+  position: relative;
+  animation: slideUp 0.4s ease-in-out;
+}
+
+.modal-content h3 {
+  color: #ff69b4; /* Hot pink */
+  font-family: 'Comic Sans MS', cursive;
+}
+
+.password-input {
+  width: 100%;
+  padding: 0.75rem;
+  margin: 1rem 0;
+  border: 2px solid #ffe0f0; /* Light pink border */
+  border-radius: 15px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.password-input:focus {
+  border-color: #ff69b4; /* Highlight on focus */
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.modal-buttons button {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.modal-buttons button:hover {
+  transform: scale(1.05);
+}
+
+.modal-buttons .submit-button {
+  background-color: #ffb6c1; /* Light salmon */
+  color: white;
+}
+
+.modal-buttons .cancel-button {
+  background-color: #ffe0f0;
+  color: #ff69b4;
+  border: 2px solid #ff69b4;
+}
+
+.modal-illustration img {
+  width: 80px;
+  margin-top: 1rem;
+  animation: bounce 1s infinite;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(50px); }
+  to { transform: translateY(0); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}

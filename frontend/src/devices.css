@@ -1,0 +1,70 @@
+.devices-page {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f5f0e1;
+  font-family: Arial, sans-serif;
+}
+
+.devices-main-content {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.devices-header {
+  background-color: #f5e5b3;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.devices-header h1 {
+  font-size: 24px;
+  color: #333;
+  margin: 0;
+}
+
+.add-device-button {
+  padding: 12px 24px;
+  background-color: #8b5a2b;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(139, 90, 43, 0.2);
+}
+
+.add-device-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(139, 90, 43, 0.3);
+  background-color: #9b6a3b;
+}
+
+.devices-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.devices-placeholder {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  text-align: center;
+  grid-column: 1 / -1;
+}
+
+.devices-placeholder h2 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.devices-placeholder p {
+  color: #666;
+  margin: 0;
+} 

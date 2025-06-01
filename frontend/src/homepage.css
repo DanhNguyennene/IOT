@@ -1,0 +1,133 @@
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .container {
+    min-height: 100vh;
+    background: linear-gradient(to bottom, white, #ffeacc);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 40px;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .logo img {
+    height: 40px;
+    width: 40px;
+  }
+  
+  .logo span {
+    font-size: 12px;
+    font-weight: bold;
+    color: #e67e22;
+  }
+  
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  
+  .disabled-button {
+    color: #ccc;
+    background: none;
+    border: none;
+    cursor: default;
+    font-size: 14px;
+  }
+  
+  .nav-links a {
+    color: #7f3f00;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .login-button {
+    background-color: #a95d32;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 999px;
+    border: none;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .main-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 60px 40px;
+  }
+  
+  @media (min-width: 768px) {
+    .main-section {
+      flex-direction: row;
+    }
+  }
+  
+  .text-content {
+    max-width: 400px;
+    margin-bottom: 40px;
+  }
+  
+  .text-content h1 {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .text-content h1 .light {
+    font-weight: normal;
+  }
+  
+  .text-content h2 {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  .text-content p {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .learn-more {
+    background-color: #a95d32;
+    color: white;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 999px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .image-section {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .cut-image {
+    height: 350px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
