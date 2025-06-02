@@ -12,7 +12,7 @@ device_service = DeviceService()
 @device_router.get("/feeds/temperature")
 async def get_temperature_feed(
     session: AsyncSession = Depends(get_session),
-    user_details=Depends(access_token_bearer)
+    # user_details=Depends(access_token_bearer)
 ):
 
     try:
@@ -26,7 +26,7 @@ async def get_temperature_feed(
 @device_router.get("/feeds/humidity")
 async def get_humidity_feed(
     session: AsyncSession = Depends(get_session),
-    user_details=Depends(access_token_bearer)
+    # user_details=Depends(access_token_bearer)
 ):
     try:
         return await device_service.get_single_feed("humidity", session)
@@ -36,10 +36,10 @@ async def get_humidity_feed(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@device_router.get("/feeds/light")
+@device_router.get("/feeds/voltage")
 async def get_light_feed(
     session: AsyncSession = Depends(get_session),
-    user_details=Depends(access_token_bearer)
+    # user_details=Depends(access_token_bearer)
 ):
     try:
         return await device_service.get_single_feed("light", session)
@@ -49,13 +49,63 @@ async def get_light_feed(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@device_router.get("/feeds/motion")
-async def get_motion_feed(
+@device_router.get("/feeds/signalStrength")
+async def get_light_feed(
     session: AsyncSession = Depends(get_session),
-    user_details=Depends(access_token_bearer)
+    # user_details=Depends(access_token_bearer)
 ):
     try:
-        return await device_service.get_single_feed("motion", session)
+        return await device_service.get_single_feed("signalStrength", session)
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@device_router.get("/feeds/pressure")
+async def get_motion_feed(
+    session: AsyncSession = Depends(get_session),
+    # user_details=Depends(access_token_bearer)
+):
+    try:
+        return await device_service.get_single_feed("pressure", session)
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@device_router.get("/feeds/lightLevel")
+async def get_motion_feed(
+    session: AsyncSession = Depends(get_session),
+    # user_details=Depends(access_token_bearer)
+):
+    try:
+        return await device_service.get_single_feed("lightLevel", session)
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@device_router.get("/feeds/moisture")
+async def get_motion_feed(
+    session: AsyncSession = Depends(get_session),
+    # user_details=Depends(access_token_bearer)
+):
+    try:
+        return await device_service.get_single_feed("moisture", session)
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@device_router.get("/feeds/light")
+async def get_motion_feed(
+    session: AsyncSession = Depends(get_session),
+    # user_details=Depends(access_token_bearer)
+):
+    try:
+        return await device_service.get_single_feed("light", session)
     except HTTPException as e:
         raise e
     except Exception as e:
@@ -65,7 +115,7 @@ async def get_motion_feed(
 @device_router.get("/feeds/all")
 async def get_all_feeds(
     session: AsyncSession = Depends(get_session),
-    user_details=Depends(access_token_bearer)
+    # user_details=Depends(access_token_bearer)
 ):
     """
     Fetch metadata for ALL feeds, record the last_value for each in Mongo, and return them all.

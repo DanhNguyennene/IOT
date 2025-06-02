@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from .db.main import init_db
 from .db.auth.routes import auth_router
 from .db.device.routes import device_router
-from .db.faceid.routes import faceid_router
+# from .db.faceid.routes import faceid_router
 @asynccontextmanager
 async def life_span(app:FastAPI):
     print(f"Server is starting...")
@@ -34,4 +34,4 @@ app.add_middleware(
 # include router 
 app.include_router(auth_router,prefix=f"/api/{version}/auth",tags=['auth'])
 app.include_router(device_router,prefix=f"/api/{version}/device",tags=['device'])
-app.include_router(faceid_router,prefix=f"/api/{version}/faceid",tags=['faceid'])
+# app.include_router(faceid_router,prefix=f"/api/{version}/faceid",tags=['faceid'])
