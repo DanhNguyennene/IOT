@@ -113,3 +113,4 @@ firestore-debug.log
 # Webpack Bundle Analyzer
 bundle-report.html
 .env
+mongo-data

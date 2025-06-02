@@ -1,128 +1,44 @@
-from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi import APIRouter, Depends, status, HTTPException, Path
 from sqlmodel.ext.asyncio.session import AsyncSession
 from src.db.main import get_db as get_session
 from src.db.auth.dependencies import AccessTokenBearer
-from .service import DeviceService
- 
+from .service import get_all_feeds, get_single_feed
+
+# Initialize router and dependencies
 device_router = APIRouter()
 access_token_bearer = AccessTokenBearer()
-device_service = DeviceService()
 
-
-@device_router.get("/feeds/temperature")
-async def get_temperature_feed(
+# Dynamic route for individual feeds
+@device_router.get("/feeds/{feed_key}", summary="Get a single feed by key")
+async def get_single_feed_route(
+    feed_key: str = Path(..., description="The key of the feed to retrieve"),
     session: AsyncSession = Depends(get_session),
+    # Uncomment the following line if authentication is required
     # user_details=Depends(access_token_bearer)
 ):
-
+    """
+    Fetch the newest value for a specific feed and return it.
+    """
     try:
-        return await device_service.get_single_feed("temperature", session)
+        return await get_single_feed(feed_key, session)
     except HTTPException as e:
         raise e
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
-
-@device_router.get("/feeds/humidity")
-async def get_humidity_feed(
+# Route to fetch all feeds
+@device_router.get("/feeds/all", summary="Get metadata for all feeds")
+async def get_all_feeds_route(
     session: AsyncSession = Depends(get_session),
-    # user_details=Depends(access_token_bearer)
-):
-    try:
-        return await device_service.get_single_feed("humidity", session)
-    except HTTPException as e:
-        raise e
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@device_router.get("/feeds/voltage")
-async def get_light_feed(
-    session: AsyncSession = Depends(get_session),
-    # user_details=Depends(access_token_bearer)
-):
-    try:
-        return await device_service.get_single_feed("light", session)
-    except HTTPException as e:
-        raise e
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@device_router.get("/feeds/signalStrength")
-async def get_light_feed(
-    session: AsyncSession = Depends(get_session),
-    # user_details=Depends(access_token_bearer)
-):
-    try:
-        return await device_service.get_single_feed("signalStrength", session)
-    except HTTPException as e:
-        raise e
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@device_router.get("/feeds/pressure")
-async def get_motion_feed(
-    session: AsyncSession = Depends(get_session),
-    # user_details=Depends(access_token_bearer)
-):
-    try:
-        return await device_service.get_single_feed("pressure", session)
-    except HTTPException as e:
-        raise e
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@device_router.get("/feeds/lightLevel")
-async def get_motion_feed(
-    session: AsyncSession = Depends(get_session),
-    # user_details=Depends(access_token_bearer)
-):
-    try:
-        return await device_service.get_single_feed("lightLevel", session)
-    except HTTPException as e:
-        raise e
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-@device_router.get("/feeds/moisture")
-async def get_motion_feed(
-    session: AsyncSession = Depends(get_session),
-    # user_details=Depends(access_token_bearer)
-):
-    try:
-        return await device_service.get_single_feed("moisture", session)
-    except HTTPException as e:
-        raise e
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-@device_router.get("/feeds/light")
-async def get_motion_feed(
-    session: AsyncSession = Depends(get_session),
-    # user_details=Depends(access_token_bearer)
-):
-    try:
-        return await device_service.get_single_feed("light", session)
-    except HTTPException as e:
-        raise e
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@device_router.get("/feeds/all")
-async def get_all_feeds(
-    session: AsyncSession = Depends(get_session),
+    # Uncomment the following line if authentication is required
     # user_details=Depends(access_token_bearer)
 ):
     """
     Fetch metadata for ALL feeds, record the last_value for each in Mongo, and return them all.
     """
     try:
-        return await device_service.get_all_feeds(session)
+        return await get_all_feeds(session)
     except HTTPException as e:
         raise e
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))

@@ -36,8 +36,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/login" element={<DashboardPage />} />
+          <Route path="/signup" element={<DashboardPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/devices" element={<DevicesPage />} />
           <Route path="/family_members" element={<FamilyMembersPage />} />
@@ -48,6 +48,7 @@ function App() {
         </Routes>
       </Router>
     </AuthProvider>
+
   );
 }
 

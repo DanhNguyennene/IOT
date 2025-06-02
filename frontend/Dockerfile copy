@@ -1,0 +1,19 @@
+FROM node:24-alpine
+
+WORKDIR /app
+
+# Install dependencies
+COPY package.json .
+RUN npm install
+
+# Copy source code
+COPY . .
+
+# Expose application port (adjust if needed)
+EXPOSE 3000
+
+# Set the host to 0.0.0.0, configurable via HOST
+ENV HOST=$HOST
+
+# Run the command from your package.json (e.g., "npm start")
+CMD ["npm", "start"]
