@@ -120,7 +120,7 @@ const DashboardPage = () => {
       const response = await apiClient.get("/device/feeds/temperature");
       const newTemp = Math.min(
         100,
-        Math.max(-100, parseFloat(response.data.value))
+        Math.max(-100, parseFloat(response.data.temperature[0].value))
       ); // [CHANGED]
       setTemperature(newTemp);
       currentValues.current.temp = newTemp;
@@ -149,11 +149,11 @@ const DashboardPage = () => {
   const fetchHumidityData = async () => {
     try {
       const response = await apiClient.get("/device/feeds/humidity");
-      if (!response.data.ok) {
-        throw new Error("Failed to fetch humidity data");
-      }
+      // if (!response.data.ok) {
+      //   throw new Error("Failed to fetch humidity data");
+      // }
       console.log("Humidity data:", response.data);
-      const newHum = Math.min(100, Math.max(0, response.data.value));
+      const newHum = Math.min(100, Math.max(0, response.data.humidity[0].value));
       setHumidity(newHum);
       currentValues.current.hum = newHum; // Update the current humidity value
     } catch (error) {
@@ -165,10 +165,10 @@ const DashboardPage = () => {
   const fetchLightFrameValue = async () => {
     try {
       const response = await apiClient.get("/device/feeds/light");
-      if (!response.data.ok) {
-        throw new Error("Failed to fetch light frame data");
-      }
-      const newLightFrame = Math.min(100, Math.max(0, response.data.value));
+      // if (!response.data.ok) {
+      //   throw new Error("Failed to fetch light frame data");
+      // }
+      const newLightFrame = Math.min(100, Math.max(0, response.data.light[0].value));
       setLightFrame(newLightFrame);
       currentValues.current.lightframe = newLightFrame; // Update the current light frame value
     } catch (error) {
@@ -180,11 +180,11 @@ const DashboardPage = () => {
   const fetchSoilMoistureData = async () => {
     try {
       const response = await apiClient.get("/device/feeds/moisture");
-      if (!response.data.ok) {
-        throw new Error("Failed to fetch soil moisture data");
-      }
+      // if (!response.data.ok) {
+      //   throw new Error("Failed to fetch soil moisture data");
+      // }
       console.log("Soil moisture data:", response.data);
-      const newSoilMoisture = Math.min(100, Math.max(0, response.data.value));
+      const newSoilMoisture = Math.min(100, Math.max(0, response.data.moisture[0].value));
       setSoilMoisture(newSoilMoisture);
       currentValues.current.soilMoisture = newSoilMoisture;
     } catch (error) {

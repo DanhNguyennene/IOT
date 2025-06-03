@@ -114,3 +114,4 @@ firestore-debug.log
 bundle-report.html
 .env
 mongo-data
+test.py
