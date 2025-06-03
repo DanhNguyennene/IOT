@@ -33,6 +33,7 @@ const DashboardPage = () => {
   const [humidity, setHumidity] = useState(0);
   const [lightframe, setLightFrame] = useState(0);
   const [temperature, setTemperature] = useState(0);
+  const [soilMoisture, setSoilMoisture] = useState(0);
   const [temperatureData, setTemperatureData] = useState({
     labels: [],
     values: [],
@@ -41,7 +42,12 @@ const DashboardPage = () => {
   const [warningMessage, setWarningMessage] = useState("");
 
   // Track current values for warning checks
-  const currentValues = useRef({ temp: 0, hum: 0, lightframe: 0 });
+  const currentValues = useRef({
+    temp: 0,
+    hum: 0,
+    lightframe: 0,
+    soilMoisture: 0,
+  });
 
   // Get color based on value and type
   const getColor = (value, type) => {
@@ -53,12 +59,16 @@ const DashboardPage = () => {
       if (value < 20) return "#add8e6"; // light blue
       if (value > 35) return "#ff0000"; // red
       return "#f5e5b3"; // default color
+    } else if (type === "soilMoisture") {
+      if (value < 0.1) return "#8B4513"; // brown (dry soil)
+      if (value > 0.6) return "#0066CC"; // blue (too wet)
+      return "#228B22"; // green (good moisture)
     }
     return "#f5e5b3";
   };
 
   // Check for warnings
-  const checkWarnings = (temp, hum) => {
+  const checkWarnings = (temp, hum, soilMoisture) => {
     const warnings = [];
     if (temp !== 0 && (temp < 20 || temp > 40)) {
       warnings.push(
@@ -67,9 +77,6 @@ const DashboardPage = () => {
         )}°C)`
       );
     }
-    // if (hum < 20 || hum > 35) {
-    //   warnings.push(`Humidity is ${hum < 20 ? 'too low' : 'too high'} (${hum.toFixed(1)}%)`);
-    // }
 
     if (warnings.length > 0) {
       setWarningMessage(warnings.join("\n"));
@@ -79,22 +86,26 @@ const DashboardPage = () => {
     }
   };
 
-  // Poll for latest data every 1 second and check warnings
   useEffect(() => {
-    // Initial fetch
     fetchTemperatureData();
     fetchHumidityData();
+    fetchSoilMoistureData();
 
     // Set up interval for updates
     const fetchInterval = setInterval(() => {
       fetchTemperatureData();
       fetchHumidityData();
       fetchLightFrameValue();
+      fetchSoilMoistureData();
     }, 1000);
 
     // Set up separate interval for warning checks with 1.2s delay
     const warningInterval = setInterval(() => {
-      checkWarnings(currentValues.current.temp, currentValues.current.hum);
+      checkWarnings(
+        currentValues.current.temp,
+        currentValues.current.hum,
+        currentValues.current.soilMoisture
+      );
     }, 1200);
 
     return () => {
@@ -141,6 +152,7 @@ const DashboardPage = () => {
       if (!response.data.ok) {
         throw new Error("Failed to fetch humidity data");
       }
+      console.log("Humidity data:", response.data);
       const newHum = Math.min(100, Math.max(0, response.data.value));
       setHumidity(newHum);
       currentValues.current.hum = newHum; // Update the current humidity value
@@ -161,6 +173,22 @@ const DashboardPage = () => {
       currentValues.current.lightframe = newLightFrame; // Update the current light frame value
     } catch (error) {
       console.error("Error fetching light frame data:", error);
+    }
+  };
+
+  // Function to fetch soil moisture data from the server
+  const fetchSoilMoistureData = async () => {
+    try {
+      const response = await apiClient.get("/device/feeds/moisture");
+      if (!response.data.ok) {
+        throw new Error("Failed to fetch soil moisture data");
+      }
+      console.log("Soil moisture data:", response.data);
+      const newSoilMoisture = Math.min(100, Math.max(0, response.data.value));
+      setSoilMoisture(newSoilMoisture);
+      currentValues.current.soilMoisture = newSoilMoisture;
+    } catch (error) {
+      console.error("Error fetching soil moisture data:", error);
     }
   };
 
@@ -251,7 +279,7 @@ const DashboardPage = () => {
       <main className="dashboard-main-content">
         <header className="dashboard-header">
           <div>
-            <h1 className="dashboard-header-title">Welcome, My Smart Home</h1>
+            <h1 className="dashboard-header-title">Welcome, My Smart Farm</h1>
             <p className="dashboard-header-subtitle">
               District 10, HCM city • Partly Cloudy
             </p>
@@ -324,9 +352,9 @@ const DashboardPage = () => {
               </div>
             </div>
 
-            {/* Motion */}
+            {/* Soil Moisture */}
             <div className="dashboard-frame dashboard-motion-frame">
-              <h3 className="dashboard-frame-title">Motion</h3>
+              <h3 className="dashboard-frame-title">Soil Moisture</h3>
               <div className="dashboard-circle-container dashboard-motion-circle">
                 <svg className="dashboard-circle-progress" viewBox="0 0 36 36">
                   <path
@@ -338,8 +366,20 @@ const DashboardPage = () => {
                     stroke="#f0f0f0"
                     strokeWidth="3"
                   />
+                  <path
+                    className="dashboard-circle-fill"
+                    d="M18 2.0845
+                      a 15.9155 15.9155 0 0 1 0 31.831
+                      a 15.9155 15.9155 0 0 1 0 -31.831"
+                    fill="none"
+                    stroke={getColor(soilMoisture, "soilMoisture")}
+                    strokeWidth="3"
+                    strokeDasharray={`${soilMoisture}, 100`}
+                  />
                 </svg>
-                <span className="dashboard-circle-value">-</span>
+                <span className="dashboard-circle-value">
+                  {soilMoisture.toFixed(1)}%
+                </span>
               </div>
             </div>
 
